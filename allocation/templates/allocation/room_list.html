@@ -1,0 +1,108 @@
+{% extends 'allocation/base.html' %}
+
+{% block title %}Room Management{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h2>Room Management</h2>
+
+    <a href="{% url 'room_add' %}" class="btn btn-primary">
+        + Add Room
+    </a>
+
+</div>
+
+<div class="card p-3">
+
+    <div class="table-responsive">
+
+        <table class="table table-hover align-middle">
+
+            <thead class="table-dark">
+
+                <tr>
+                    <th>Block</th>
+                    <th>Room Number</th>
+                    <th>Capacity</th>
+                    <th>Occupied</th>
+                    <th>Vacancies</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for room in rooms %}
+
+                <tr>
+
+                    <td>{{ room.block.block_name }}</td>
+
+                    <td>{{ room.room_number }}</td>
+
+                    <td>{{ room.capacity }}</td>
+
+                    <!-- Corrected occupied field -->
+                    <td>{{ room.occupied }}</td>
+
+                    <td>
+                        <strong class="text-success">
+                            {{ room.vacancies }}
+                        </strong>
+                    </td>
+
+                    <td>
+
+                        {% if room.vacancies <= 0 %} <span class="badge bg-danger">
+                            Full
+                            </span>
+
+                            {% else %}
+
+                            <span class="badge bg-success">
+                                Available
+                            </span>
+
+                            {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        <a href="{% url 'room_edit' room.id %}" class="btn btn-sm btn-warning">
+                            Edit
+                        </a>
+
+                        <a href="{% url 'room_delete' room.id %}" class="btn btn-sm btn-danger">
+                            Delete
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="7" class="text-center">
+                        No rooms available.
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

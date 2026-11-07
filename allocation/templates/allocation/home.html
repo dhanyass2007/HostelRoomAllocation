@@ -1,0 +1,40 @@
+{% extends 'allocation/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<div class="card p-5 text-center mt-4">
+
+    <h1 class="display-5 fw-bold">
+        Hostel Room Allocation System
+    </h1>
+
+    <h4 class="text-primary mt-3">
+        Welcome to Our Hostel
+    </h4>
+
+    <p class="text-muted mt-3">
+        Smart and Easy Hostel Room Management System.
+    </p>
+
+    <p>
+        Manage hostel blocks, rooms, students and room allocations
+        in one place.
+    </p>
+
+    <div class="mt-4">
+
+        <a href="{% url 'login' %}" class="btn btn-primary btn-lg">
+            Login
+        </a>
+
+        <a href="{% url 'register' %}" class="btn btn-success btn-lg">
+            Student Register
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

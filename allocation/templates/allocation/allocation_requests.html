@@ -1,0 +1,104 @@
+{% extends 'allocation/base.html' %}
+
+{% block title %}Allocation Requests{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">Student Room Requests</h2>
+
+<div class="card p-3">
+
+    <div class="table-responsive">
+
+        <table class="table table-striped">
+
+            <thead class="table-dark">
+
+                <tr>
+                    <th>Student</th>
+                    <th>Block</th>
+                    <th>Room</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for item in allocations %}
+
+                <tr>
+
+                    <td>{{ item.student.username }}</td>
+
+                    <td>{{ item.room.block.block_name }}</td>
+
+                    <td>{{ item.room.room_number }}</td>
+
+                    <td>
+                        {% if item.status == "APPROVED" %}
+                        <span class="badge bg-success">Approved</span>
+                        {% elif item.status == "REJECTED" %}
+                        <span class="badge bg-danger">Rejected</span>
+                        {% else %}
+                        <span class="badge bg-warning text-dark">Pending</span>
+                        {% endif %}
+                    </td>
+
+                    <td>{{ item.requested_date|date:"d-m-Y" }}</td>
+
+                    <td>
+
+                        {% if item.status == "PENDING" %}
+
+                        <form method="post" action="{% url 'allocation_action' item.id 'approve' %}" class="d-inline">
+
+                            {% csrf_token %}
+
+                            <button type="submit" class="btn btn-success btn-sm">
+                                Approve
+                            </button>
+
+                        </form>
+
+                        <form method="post" action="{% url 'allocation_action' item.id 'reject' %}" class="d-inline">
+
+                            {% csrf_token %}
+
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                Reject
+                            </button>
+
+                        </form>
+
+                        {% else %}
+
+                        <span class="text-muted">Processed</span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+                    <td colspan="6" class="text-center">
+                        No requests found.
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

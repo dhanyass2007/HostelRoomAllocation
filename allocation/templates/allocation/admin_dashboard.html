@@ -1,0 +1,92 @@
+{% extends 'allocation/base.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+
+<h2 class="fw-bold mb-4">Admin Dashboard</h2>
+
+<div class="row g-3">
+
+    <div class="col-md-3">
+        <div class="card p-3">
+            <h6>Total Blocks</h6>
+            <h2>{{ total_blocks }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card p-3">
+            <h6>Total Rooms</h6>
+            <h2>{{ total_rooms }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card p-3">
+            <h6>Total Students</h6>
+            <h2>{{ total_students }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card p-3">
+            <h6>Total Vacancies</h6>
+            <h2 class="text-success">{{ total_vacancies }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card p-3">
+            <h6>Total Capacity</h6>
+            <h2>{{ total_capacity }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card p-3">
+            <h6>Occupied Beds</h6>
+            <h2>{{ total_occupied }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card p-3">
+            <h6>Pending Requests</h6>
+            <h2 class="text-warning">{{ pending_requests }}</h2>
+        </div>
+    </div>
+
+</div>
+
+<div class="card p-4 mt-4">
+
+    <h4>Quick Actions</h4>
+
+    <div class="d-flex flex-wrap gap-2 mt-3">
+
+        <a href="{% url 'block_add' %}" class="btn btn-primary">
+            + Add Block
+        </a>
+
+        <a href="{% url 'block_list' %}" class="btn btn-secondary">
+            Manage Blocks
+        </a>
+
+        <a href="{% url 'room_add' %}" class="btn btn-success">
+            + Add Room
+        </a>
+
+        <a href="{% url 'room_list' %}" class="btn btn-info">
+            Manage Rooms
+        </a>
+
+        <a href="{% url 'allocation_requests' %}" class="btn btn-warning">
+            View Requests
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

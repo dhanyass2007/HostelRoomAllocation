@@ -1,0 +1,141 @@
+{% extends 'allocation/base.html' %}
+
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">Student Dashboard</h2>
+
+<div class="card p-4 mb-4">
+
+    <h4>Welcome, {{ profile.user.first_name }}!</h4>
+
+    <hr>
+
+    <p><strong>Username:</strong> {{ profile.user.username }}</p>
+    <p><strong>Department:</strong> {{ profile.department }}</p>
+    <p><strong>Year:</strong> {{ profile.year }}</p>
+    <p><strong>Phone:</strong> {{ profile.phone }}</p>
+
+</div>
+
+<div class="card p-4 mb-4">
+
+    <h4>Available Hostel Rooms</h4>
+
+    <div class="table-responsive">
+
+        <table class="table table-striped">
+
+            <thead class="table-dark">
+                <tr>
+                    <th>Block</th>
+                    <th>Room</th>
+                    <th>Capacity</th>
+                    <th>Vacancies</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for room in rooms %}
+
+                <tr>
+
+                    <td>{{ room.block.block_name }}</td>
+                    <td>{{ room.room_number }}</td>
+                    <td>{{ room.capacity }}</td>
+                    <td>{{ room.vacancies }}</td>
+
+                    <td>
+
+                        {% if room.vacancies > 0 %}
+
+                        <form method="post" action="{% url 'room_request' room.id %}">
+
+                            {% csrf_token %}
+
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                Request Room
+                            </button>
+
+                        </form>
+
+                        {% else %}
+
+                        <span class="badge bg-danger">
+                            Full
+                        </span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+                    <td colspan="5" class="text-center">
+                        No rooms available.
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<div class="card p-4">
+
+    <h4>My Room Requests</h4>
+
+    <div class="table-responsive">
+
+        <table class="table table-striped">
+
+            <thead class="table-dark">
+                <tr>
+                    <th>Block</th>
+                    <th>Room</th>
+                    <th>Status</th>
+                    <th>Requested Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for item in allocations %}
+
+                <tr>
+                    <td>{{ item.room.block.block_name }}</td>
+                    <td>{{ item.room.room_number }}</td>
+                    <td>{{ item.get_status_display }}</td>
+                    <td>{{ item.requested_date|date:"d-m-Y" }}</td>
+                </tr>
+
+                {% empty %}
+
+                <tr>
+                    <td colspan="4" class="text-center">
+                        No room requests found.
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}
